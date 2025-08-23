@@ -1,0 +1,89 @@
+* {
+  box-sizing: border-box;
+  --webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  --base: #faf4ed;
+  --text: #464261;
+  --gray: #6e6a86;
+  --done: #95b1ac;
+  --warn: #f6c177;
+  --error: #eb6f92;
+  --radius: 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --base: #191724;
+    --text: #e0def4;
+  }
+}
+
+@keyframes show {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.show {
+  animation: .5s show ease forwards;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+html {
+  background-color: var(--base);
+  color: var(--text);
+  font-size: 17px;
+  font-family: serif;
+  line-height: 2em;
+}
+
+input,
+textarea {
+  width: 100%;
+  background-color: var(--base);
+  outline: 0;
+  border: 1px solid var(--text);
+  color: var(--text);
+  border-radius: var(--radius);
+  margin-block: 8px;
+  display: block;
+  padding: 15px 8px;
+  transition: border-color .2s;
+}
+
+
+button {
+  background-color: var(--text);
+  color: var(--base);
+  border-radius: var(--radius);
+  margin-block: 5px;
+  padding: 12px 8px;
+  border: 1px solid var(--text);
+}
+
+button:disabled {
+  background-color: var(--gray);
+  border-color: var(--gray);
+}
+
+ul {
+  padding-left: 0;
+}
+
+p {
+  line-height: 1.8em;
+}
+
+a {
+  color: var(--done);
+  text-decoration: none;
+}
