@@ -1,10 +1,12 @@
 * {
+  user-select: none;
   box-sizing: border-box;
   --webkit-tap-highlight-color: transparent;
 }
 
 :root {
   --base: #faf4ed;
+  --base: #faf4ed7e;
   --text: #464261;
   --gray: #6e6a86;
   --done: #95b1ac;
@@ -16,6 +18,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --base: #191724;
+    --blur: #191724e9;
     --text: #e0def4;
   }
 }
@@ -43,7 +46,6 @@ html {
   color: var(--text);
   font-size: 17px;
   font-family: serif;
-  line-height: 2em;
 }
 
 input,
@@ -68,6 +70,7 @@ button {
   margin-block: 5px;
   padding: 12px 8px;
   border: 1px solid var(--text);
+  cursor: pointer;
 }
 
 button:disabled {

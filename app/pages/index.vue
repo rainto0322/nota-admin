@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <NuxtLayout name="login">
+
     <!-- form submit -->
     <form @submit.prevent="submit" class="max-w-300px mx-auto mt-15vh">
       <h1 class="text-center">ʕ•ᴥ•ʔ</h1>
@@ -39,11 +40,12 @@
 
       <nota-footer class="text-gray" />
     </form>
-  </div>
+  </NuxtLayout>
 </template>
 
 <script lang="ts" setup>
 import { validateForm } from "@/utils/validate-form";
+const cue = useCue()
 
 const signMode = ref(false)
 const loading = ref(false)
@@ -51,9 +53,9 @@ const loading = ref(false)
 const toggleMode = () => signMode.value = !signMode.value
 
 const form = ref({
-  name: 'damin',
-  psw: '',
-  email: ''
+  name: 'admin',
+  psw: 'wasd12345678',
+  email: 'admin123@faxmail.com'
 })
 
 const formErrors = ref({
@@ -62,28 +64,54 @@ const formErrors = ref({
   email: ''
 })
 
-
 const submit = async () => {
   loading.value = true
-
   if (!validateForm(form, formErrors, signMode)) {
     loading.value = false
     return;
   }
-
-  signMode ? await signup : await login
-
+  signMode.value ? await signup() : await login()
   loading.value = false
 }
 
 const login = async () => {
-
+  const token = useLocal.get()
+  await useApi.post(
+    'user/login',
+    form.value,
+    token ? token : ''
+  ).then((data) => {
+    const { ok, token } = data
+    if (ok) {
+      useRouter().push({ path: "/admin" })
+      if (token) useLocal.set(token)
+    }
+  }).catch(() => {
+    useLocal.remove()
+  })
 }
+
 const signup = async () => {
-
+  await useApi.post('user/reg', form.value)
+    .then((data) => {
+      if (data.ok) {
+        cue.done({ title: data.msg || 'Signup succrssful.' })
+      }
+    }).catch(() => { })
 }
 
+onMounted(async () => {
+  const noauth = useRoute().query.mode === 'auth'
+  if (noauth) {
+    cue.error({ title: 'You have no permission' })
+  } else {
+    const init: any = await useApi.get('user/init')
+    if (init.ok) {
+      signMode.value = true
+      useCue().done({ title: "Please initialize the owner." })
+    }
+  }
+})
 </script>
 
-<style>
-</style>
+<style></style>

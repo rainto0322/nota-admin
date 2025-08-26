@@ -22,10 +22,9 @@ export const useCue = () => {
     });
 
     if (cues.value.length > max) cues.value.shift();
-    console.log(cues.value);
 
     setTimeout(() => {
-      // remove(id)
+      remove(id)
     }, 2000);
 
   };

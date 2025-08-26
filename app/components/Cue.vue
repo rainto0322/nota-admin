@@ -23,7 +23,7 @@ const RemoveCue = (id: string) => {
 <style scoped>
 .cues {
   width: 220px;
-  font-size: .9em;
+  font-size: .8em;
   position: fixed;
   left: 0;
   bottom: 0;
@@ -41,11 +41,12 @@ const RemoveCue = (id: string) => {
 .cue {
   padding: 8px;
   margin: 8px;
+  line-height: 1.2em;
   border: 2px solid var(--text);
   border-radius: 8px;
   background: var(--base);
   user-select: none;
-  overflow-wrap: break-word
+  overflow-wrap: break-word;
 }
 
 .cue-head {

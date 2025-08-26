@@ -1,9 +1,6 @@
 <template>
-  <div id="admin">
-    <div class="show">
-      <slot />
-    </div>
-    <admin-context-menu />
+  <div id="login">
+    <slot />
   </div>
 </template>
 
