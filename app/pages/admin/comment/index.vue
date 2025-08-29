@@ -1,7 +1,7 @@
 <template>
-    <div id="default">
-        <slot />
-    </div>
+  <nuxt-layout name="admin">
+    <h1>Comment</h1>
+  </nuxt-layout>
 </template>
 
 <script lang="ts" setup>

@@ -1,7 +1,8 @@
 export default defineNuxtRouteMiddleware((to, from) => {
-  const token = useLocal.get()
-
+  const { menuMode } = useStatus()
+  menuMode.value = false
+  const token = useToken.get()
   if (to.path.includes('admin') && !token) {
-    return navigateTo('/')
+    return navigateTo('/?mode=auth')
   }
 })

@@ -4,9 +4,9 @@ export const useContext = () => {
   const menuY = ref('');
 
   if (import.meta.client) {
-
     const handleContextMenu = (event: MouseEvent) => {
       event.preventDefault();
+      if (menuMode.value) return;
       menuMode.value = true;
       const clientX = event.clientX,
         clientY = event.clientY,
@@ -27,9 +27,6 @@ export const useContext = () => {
     };
 
     document.addEventListener('contextmenu', handleContextMenu);
-    document.addEventListener('oncontextlost', (event) => {
-      event.preventDefault
-    });
 
     document.addEventListener('click', (event) => {
       if (menuMode.value === true) menuMode.value = false

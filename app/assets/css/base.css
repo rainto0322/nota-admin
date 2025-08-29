@@ -1,12 +1,12 @@
 * {
   user-select: none;
   box-sizing: border-box;
-  --webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: transparent;
 }
 
 :root {
   --base: #faf4ed;
-  --base: #faf4ed7e;
+  --blur: #fffaf37e;
   --text: #464261;
   --gray: #6e6a86;
   --done: #95b1ac;
@@ -18,7 +18,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --base: #191724;
-    --blur: #191724e9;
+    --blur: #2a273f7e;
     --text: #e0def4;
   }
 }
@@ -46,6 +46,10 @@ html {
   color: var(--text);
   font-size: 17px;
   font-family: serif;
+}
+
+body {
+  margin: 0;
 }
 
 input,

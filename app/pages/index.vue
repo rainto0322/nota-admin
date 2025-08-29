@@ -1,46 +1,43 @@
 <template>
-  <NuxtLayout name="login">
+  <!-- form submit -->
+  <form @submit.prevent="submit" class="max-w-300px mx-auto mt-15vh">
+    <h1 class="text-center">ʕ•ᴥ•ʔ</h1>
 
-    <!-- form submit -->
-    <form @submit.prevent="submit" class="max-w-300px mx-auto mt-15vh">
-      <h1 class="text-center">ʕ•ᴥ•ʔ</h1>
+    <!-- toggle mode  -->
+    <div class="flex justify-between items-center select-none" @click="loading ? false : toggleMode()">
+      <h2 v-if="signMode" class="text-md show">Signup</h2>
+      <h2 v-else class="text-md show">Login</h2>
+      <toggle-button v-model="signMode" />
+    </div>
 
-      <!-- toggle mode  -->
-      <div class="flex justify-between items-center select-none" @click="loading ? false : toggleMode()">
-        <h2 v-if="signMode" class="text-md show">Signup</h2>
-        <h2 v-else class="text-md show">Login</h2>
-        <toggle-button v-model="signMode" />
+    <!-- form input -->
+    <div class="min-h-170px">
+      <!-- name -->
+      <input :class="{ 'border-error': formErrors.name }" v-model="form.name" placeholder="name" />
+
+      <!-- password -->
+      <input :class="{ 'border-error': formErrors.psw }" v-model="form.psw" placeholder="password" />
+
+      <!-- email -->
+      <div class="show" v-if="signMode">
+        <input :class="{ 'border-error': formErrors.email }" v-model="form.email" placeholder="email" />
       </div>
 
-      <!-- form input -->
-      <div class="min-h-170px">
-        <!-- name -->
-        <input :class="{ 'border-error': formErrors.name }" v-model="form.name" placeholder="name" />
+      <!-- error list -->
+      <ul>
+        <li class="text-error text-xs block" v-for="error in formErrors">
+          {{ error ? '- ' + error : '' }}
+        </li>
+      </ul>
+    </div>
 
-        <!-- password -->
-        <input :class="{ 'border-error': formErrors.psw }" v-model="form.psw" placeholder="password" />
+    <!-- submit button -->
+    <button class="w-full" :disabled="loading">
+      {{ loading ? "loading..." : "submit" }}
+    </button>
 
-        <!-- email -->
-        <div class="show" v-if="signMode">
-          <input :class="{ 'border-error': formErrors.email }" v-model="form.email" placeholder="email" />
-        </div>
-
-        <!-- error list -->
-        <ul>
-          <li class="text-error text-xs block" v-for="error in formErrors">
-            {{ error ? '- ' + error : '' }}
-          </li>
-        </ul>
-      </div>
-
-      <!-- submit button -->
-      <button class="w-full" :disabled="loading">
-        {{ loading ? "loading..." : "submit" }}
-      </button>
-
-      <nota-footer class="text-gray" />
-    </form>
-  </NuxtLayout>
+    <nota-footer class="text-gray" />
+  </form>
 </template>
 
 <script lang="ts" setup>
@@ -75,7 +72,7 @@ const submit = async () => {
 }
 
 const login = async () => {
-  const token = useLocal.get()
+  const token = useToken.get()
   await useApi.post(
     'user/login',
     form.value,
@@ -84,10 +81,10 @@ const login = async () => {
     const { ok, token } = data
     if (ok) {
       useRouter().push({ path: "/admin" })
-      if (token) useLocal.set(token)
+      if (token) useToken.set(token)
     }
   }).catch(() => {
-    useLocal.remove()
+    useToken.remove()
   })
 }
 
@@ -101,11 +98,15 @@ const signup = async () => {
 }
 
 onMounted(async () => {
+  const auth = useToken.get()
   const noauth = useRoute().query.mode === 'auth'
-  if (noauth) {
-    cue.error({ title: 'You have no permission' })
+
+  if (auth) {
+    await submit()
   } else {
+    if (noauth) cue.error({ title: 'You have no permission' })
     const init: any = await useApi.get('user/init')
+  
     if (init.ok) {
       signMode.value = true
       useCue().done({ title: "Please initialize the owner." })

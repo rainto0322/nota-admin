@@ -1,7 +1,7 @@
-//  composables/useLocal
+//  composables/useToken
 // https://nuxt.com/docs/4.x/api/composables/use-cookie
 const Token = 'nota_token'
-export const useLocal = {
+export const useToken = {
   get: () => useCookie(Token).value,
   set: (params: string) => {
     const auth = useCookie(Token, {

@@ -1,8 +1,6 @@
 <template>
-  <nuxt-layout>
-    <div>
-      <h1>goto</h1>
-    </div>
+  <nuxt-layout name="admin">
+    <h1>Memo</h1>
   </nuxt-layout>
 </template>
 

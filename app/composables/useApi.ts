@@ -23,15 +23,15 @@ const createFetch = async (method: Method, path: string, body?: any, token?: str
     }>(url + path, options);
 
     if (result.ok) cue.done({ title: result.msg || 'Successful.' });
-    console.log(result);
+    // console.log(result);
     return result
   } catch (error: any) {
     let errorMsg = error.data?.msg || error.message || 'Request failed';
 
     // permission
     if (error.data.code === 401) {
-      useLocal.remove()
-      useRouter().push({ path: '/', query: { mode: 'auth' } })
+      useToken.remove()
+      useRouter().push({ path: '/admin?mode=auth' })
     }
 
     cue.error({ title: errorMsg });

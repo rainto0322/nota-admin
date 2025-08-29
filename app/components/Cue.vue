@@ -43,7 +43,7 @@ const RemoveCue = (id: string) => {
   margin: 8px;
   line-height: 1.2em;
   border: 2px solid var(--text);
-  border-radius: 8px;
+  border-radius: var(--radius);
   background: var(--base);
   user-select: none;
   overflow-wrap: break-word;
