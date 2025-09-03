@@ -4,7 +4,7 @@
             <icon size="28" name="tabler:list" />
         </div>
         <admin-header class="header" :class="{ 'open': menuMode }" />
-        <div class="p-4 show">
+        <div class="p-4 w-full show">
             <slot />
         </div>
     </div>

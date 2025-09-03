@@ -1,6 +1,7 @@
 <template>
   <nuxt-layout name="admin">
     <h1>Memo</h1>
+    fuck you
   </nuxt-layout>
 </template>
 
