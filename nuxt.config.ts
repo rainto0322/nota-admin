@@ -3,7 +3,9 @@ export default defineNuxtConfig({
   devServer: { host: "0.0.0.0" },
   runtimeConfig: {
     public: {
-      api: process.env.API_URL
+      api: process.env.API_URL,
+      git_path: process.env.GIT_PATH,
+      git_token: process.env.GIT_TOKEN,
     }
   },
   modules: [

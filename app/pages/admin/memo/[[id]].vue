@@ -1,5 +1,6 @@
 <template>
   <nuxt-layout name="admin">
+    <form-upload v-model="form.img" />
     <form-datetime v-model="form.date" />
     <form-markdown v-model="form.text" />
     <button @click="submit">tijiao</button>
@@ -16,9 +17,8 @@ const form = ref({
 })
 
 const submit = () => {
-  console.log(form.value.text);
+  console.log(form.value);
 }
-
 
 </script>
 

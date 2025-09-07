@@ -42,7 +42,7 @@ const toggleMenu = () => {
         overflow-y: auto;
         position: fixed;
         visibility: hidden;
-        background-color: #1f1d30;
+        background-color: var(--base);
         z-index: 10;
         opacity: 0;
         transition: all .2s;

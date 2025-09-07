@@ -1,5 +1,5 @@
 <template>
-  <textarea v-model="modelValue" spellcheck="false" rows="20"></textarea>
+  <textarea class="text-sm" v-model="modelValue" spellcheck="false" rows="10"></textarea>
 </template>
 
 <script lang="ts" setup>
