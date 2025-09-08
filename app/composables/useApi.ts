@@ -1,12 +1,13 @@
 type Options = { token?: string, body?: any }
 type Method = 'GET' | 'POST' | 'PUT' | 'DELETE'
 
-const createFetch = async (method: Method, path: string, body?: any, token?: string) => {
+const createFetch = async (method: Method, path: string, body?: any) => {
   const cue = useCue()
   const url = useRuntimeConfig().public.api
+  const token = useToken.get()
 
   const headers: Record<string, string> = { 'Content-Type': 'application/json' }
-  if (token) headers["Authorization"] = `${token}`
+  if (method !== 'GET' && token) headers["Authorization"] = `${token}`
 
   const options = {
     method,
@@ -23,7 +24,7 @@ const createFetch = async (method: Method, path: string, body?: any, token?: str
     }>(url + path, options);
 
     if (result.ok) cue.done({ title: result.msg || 'Successful.' });
-    // console.log(result);
+    console.log(result);
     return result
   } catch (error: any) {
     let errorMsg = error.data?.msg || error.message || 'Request failed';
@@ -41,7 +42,7 @@ const createFetch = async (method: Method, path: string, body?: any, token?: str
 
 export const useApi = {
   get: (path: string) => createFetch('GET', path),
-  post: (path: string, body: any, token?: string) => createFetch('POST', path, body, token),
-  put: (path: string, options: Options) => createFetch('PUT', path, options),
-  del: (path: string, options: Options) => createFetch('DELETE', path, options)
+  post: (path: string, body: any) => createFetch('POST', path, body),
+  put: (path: string, body: any) => createFetch('PUT', path, body),
+  del: (path: string, body: any) => createFetch('DELETE', path, body)
 }

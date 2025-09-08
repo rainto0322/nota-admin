@@ -76,7 +76,6 @@ const login = async () => {
   await useApi.post(
     'user/login',
     form.value,
-    token ? token : ''
   ).then((data) => {
     const { ok, token } = data
     if (ok) {

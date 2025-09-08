@@ -16,9 +16,31 @@ const form = ref({
   date: 0,
 })
 
-const submit = () => {
-  console.log(form.value);
+if (id) await GetMemo()
+
+const GetMemo = async () => {
+  await useApi.get(`memo/${id}`).then((data) => {
+    if (data.ok) {
+      console.log(data);
+
+    }
+  })
 }
+
+
+const submit = async () => {
+  id ? await UpdateMemo() : await CreateMemo()
+}
+
+const CreateMemo = async () => {
+  await useApi.post('memo', form.value).then(() => { }).catch(() => { })
+}
+
+const UpdateMemo = async () => {
+  await useApi.put(`memo/${id}`, form.value).catch(() => { })
+}
+
+
 
 </script>
 
