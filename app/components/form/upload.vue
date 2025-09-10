@@ -61,31 +61,31 @@ const handleUpload = async (event: Event) => {
 <style scoped>
 @keyframes start {
   from {
-    width: 0;
+    width: 100%;
   }
 
   to {
-    width: 30%;
+    width: 60%;
   }
 }
 
 @keyframes conduct {
   from {
-    width: 30%;
+    width: 60%;
   }
 
   to {
-    width: 60%;
+    width: 30%;
   }
 }
 
 @keyframes done {
   from {
-    width: 60%;
+    width: 30%;
   }
 
   to {
-    width: 100%;
+    width: 0%;
   }
 }
 
@@ -115,9 +115,9 @@ const handleUpload = async (event: Event) => {
 
 .img .img-state {
   position: absolute;
-  width: 0%;
+  width: 100%;
   height: 100%;
-  left: 0;
+  right: 0;
   top: 0;
   background-color: var(--error);
   opacity: .5;

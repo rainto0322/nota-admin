@@ -16,19 +16,21 @@ const form = ref({
   date: 0,
 })
 
-if (id) await GetMemo()
 
 const GetMemo = async () => {
   await useApi.get(`memo/${id}`).then((data) => {
     if (data.ok) {
-      console.log(data);
-
+      form.value = data.data
     }
   })
 }
 
+if (id) {
+  await GetMemo()
+}
 
 const submit = async () => {
+  if (form.value.text.length <= 5) return
   id ? await UpdateMemo() : await CreateMemo()
 }
 

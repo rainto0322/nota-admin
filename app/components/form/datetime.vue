@@ -23,6 +23,8 @@ const InputDate = computed(() => {
 
 onMounted(() => {
   if (!modelValue.value) {
+    console.log(FormatDate(Date.now()));
+
     modelValue.value = FormatDate(Date.now())
   }
 })
