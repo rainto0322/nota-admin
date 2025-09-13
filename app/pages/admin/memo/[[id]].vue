@@ -16,10 +16,11 @@ const form = ref({
   date: 0,
 })
 
-
 const GetMemo = async () => {
   await useApi.get(`memo/${id}`).then((data) => {
     if (data.ok) {
+      console.log(data);
+      
       form.value = data.data
     }
   })
