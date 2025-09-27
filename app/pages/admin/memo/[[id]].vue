@@ -3,24 +3,27 @@
     <form-upload v-model="form.img" />
     <form-datetime v-model="form.date" />
     <form-markdown v-model="form.text" />
-    <button @click="submit">tijiao</button>
+    <div class="text-right">
+      <button @click="submit">
+        {{ loading ? "loading..." : "submit" }}
+      </button>
+    </div>
   </nuxt-layout>
 </template>
 
 <script lang="ts" setup>
 const route = useRoute();
+const loading = ref(false)
 const id = route.params.id || null;
 const form = ref({
   img: [],
   text: '',
-  date: 0,
+  date: '',
 })
 
 const GetMemo = async () => {
   await useApi.get(`memo/${id}`).then((data) => {
     if (data.ok) {
-      console.log(data);
-      
       form.value = data.data
     }
   })
@@ -31,19 +34,22 @@ if (id) {
 }
 
 const submit = async () => {
-  if (form.value.text.length <= 5) return
+  loading.value = true
   id ? await UpdateMemo() : await CreateMemo()
+  loading.value = false
 }
 
 const CreateMemo = async () => {
-  await useApi.post('memo', form.value).then(() => { }).catch(() => { })
+  await useApi.post('memo', form.value).then(() => {
+    useRouter().push('/admin/memo/p/')
+  }).catch(() => { })
 }
 
 const UpdateMemo = async () => {
-  await useApi.put(`memo/${id}`, form.value).catch(() => { })
+  await useApi.put(`memo/${id}`, form.value).then(() => {
+    useRouter().push('/admin/memo/p/')
+  }).catch(() => { })
 }
-
-
 
 </script>
 

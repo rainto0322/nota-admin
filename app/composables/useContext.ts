@@ -31,7 +31,7 @@ export const useContext = () => {
     document.addEventListener('click', (event) => {
       if (menuMode.value === true) menuMode.value = false
     });
-
+	
     // document.oncontextlost
     onUnmounted(() => {
       document.removeEventListener('contextmenu', handleContextMenu);

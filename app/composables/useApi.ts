@@ -23,8 +23,10 @@ const createFetch = async (method: Method, path: string, body?: any) => {
       data?: any,
     }>(url + path, options);
 
-    if (result.ok) cue.done({ title: result.msg || 'Successful.' });
-    console.log(result);
+    if (result.ok && import.meta.client && method !== 'GET') {
+      cue.done({ title: result.msg || 'Successful.' });
+      console.log(result);
+    }
     return result
   } catch (error: any) {
     let errorMsg = error.data?.msg || error.message || 'Request failed';
@@ -44,5 +46,5 @@ export const useApi = {
   get: (path: string) => createFetch('GET', path),
   post: (path: string, body: any) => createFetch('POST', path, body),
   put: (path: string, body: any) => createFetch('PUT', path, body),
-  del: (path: string, body: any) => createFetch('DELETE', path, body)
+  delete: (path: string) => createFetch('DELETE', path)
 }

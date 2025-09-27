@@ -6,7 +6,7 @@
 
 :root {
   --base: #faf4ed;
-  --blur: #fffaf37e;
+  --blur: #fffaf3;
   --text: #464261;
   --gray: #6e6a86;
   --done: #95b1ac;
@@ -18,7 +18,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --base: #191724;
-    --blur: #2a273f7e;
+    --blur: #2a273f;
     --text: #e0def4;
   }
 }

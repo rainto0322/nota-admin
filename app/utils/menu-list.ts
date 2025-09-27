@@ -5,3 +5,8 @@ export const NotaMenu = [
   { name: 'Album', path: '/album', icon: 'tabler:photo' },
   { name: 'Comment', path: '/comment', icon: 'tabler:message' }
 ]
+
+
+export const DashMenu = [
+  { name: 'Memo', path: '/memo', icon: 'tabler:pencil-heart' }
+]

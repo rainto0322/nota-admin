@@ -1,40 +1,31 @@
 <template>
-  <input type="datetime-local" step="1" :value="InputDate" @input="onInput" />
+  <input type="datetime-local" step="1" :value="displayValue" @input="onInput" />
 </template>
 
 <script setup lang="ts">
-import dayjs from "dayjs";
-const modelValue = defineModel<number>()
+const modelValue = defineModel<string>()
 
-const ConvertDate = (params: number) => {
-  return dayjs(params).format('YYYY-MM-DDTHH:mm:ss')
+const FormatDate = (params: string) => {
+  return params.split('.')[0]
 }
 
-const FormatDate = (params: number) => {
-  return Math.floor(params / 1000)
-}
-
-
-const InputDate = computed(() => {
-  if (modelValue.value) {
-    return ConvertDate(modelValue.value * 1000)
-  }
+const displayValue = computed(() => {
+  return FormatDate(modelValue.value as string)
 })
+
+if (modelValue.value) {
+  modelValue.value = FormatDate(modelValue.value)
+}
 
 onMounted(() => {
   if (!modelValue.value) {
-    console.log(FormatDate(Date.now()));
-
-    modelValue.value = FormatDate(Date.now())
+    modelValue.value = FormatDate(new Date().toISOString())
   }
 })
 
 const onInput = (event: Event) => {
   const inputElement = event.target as HTMLInputElement
-  const value = inputElement.value
-  if (value) {
-    modelValue.value = FormatDate(new Date(value).getTime())
-  }
+  modelValue.value = inputElement.value
 }
 
 </script>

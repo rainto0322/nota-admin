@@ -1,10 +1,10 @@
 <template>
     <div id="admin">
         <div class="menu-open-btn" @click="toggleMenu">
-            <icon size="28" name="tabler:list" />
+            <icon name="tabler-list" size="22"/>
         </div>
         <admin-header class="header" :class="{ 'open': menuMode }" />
-        <div class="p-4 w-full show">
+        <div class="p-4 w-full show overflow-x-auto">
             <slot />
         </div>
     </div>
@@ -36,13 +36,13 @@ const toggleMenu = () => {
 
 @media screen and (max-width: 768px) {
     .header {
-        width: 100vw;
         min-height: 100vh;
         overflow-x: hidden;
         overflow-y: auto;
         position: fixed;
         visibility: hidden;
-        background-color: var(--base);
+        background-color: var(--blur);
+        backdrop-filter: blur(5px);
         z-index: 10;
         opacity: 0;
         transition: all .2s;
@@ -57,12 +57,15 @@ const toggleMenu = () => {
 
     .menu-open-btn {
         display: block;
+        min-width: 42px;
+        min-height: 42px;
         padding: 10px;
-        border-radius: 50%;
+        border-radius: 10px;
         line-height: 0;
         position: fixed;
-        right: 1em;
-        bottom: 1em;
+        right: 2em;
+        bottom: 3em;
+        background-color: var(--blur);
         color: var(--warn);
         z-index: 25;
     }
