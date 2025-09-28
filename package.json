@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-app",
+  "name": "nota-admin",
   "type": "module",
   "private": true,
   "scripts": {
@@ -11,15 +11,16 @@
   },
   "dependencies": {
     "nuxt": "^4.1.2",
-    "vue": "^3.5.18",
+    "vue": "^3.5.21",
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
-    "@nuxt/icon": "^2.0.0",
-    "@types/node": "^24.5.2",
     "@unocss/nuxt": "^66.4.2",
     "@unocss/preset-wind3": "^66.4.2",
+    "@nuxt/icon": "^2.0.0",
+    "@iconify-json/tabler": "^1.2.23",
+    "@types/node": "^24.5.2",
     "dayjs": "^1.11.18",
-    "unocss": "^66.4.2"
+    "unocss": "^66.5.2"
   }
 }

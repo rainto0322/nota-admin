@@ -50,9 +50,9 @@ const loading = ref(false)
 const toggleMode = () => signMode.value = !signMode.value
 
 const form = ref({
-  name: 'admin',
-  psw: 'wasd12345678',
-  email: 'admin123@faxmail.com'
+  name: '',
+  psw: '',
+  email: ''
 })
 
 const formErrors = ref({
