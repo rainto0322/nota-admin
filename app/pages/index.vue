@@ -89,11 +89,7 @@ const login = async () => {
 
 const signup = async () => {
   await useApi.post('user/reg', form.value)
-    .then((data) => {
-      if (data.ok) {
-        cue.done({ title: data.msg || 'Signup succrssful.' })
-      }
-    }).catch(() => { })
+    .then((data) => { }).catch(() => { })
 }
 
 onMounted(async () => {
@@ -105,7 +101,7 @@ onMounted(async () => {
   } else {
     if (noauth) cue.error({ title: 'You have no permission' })
     const init: any = await useApi.get('user/init')
-  
+
     if (init.ok) {
       signMode.value = true
       useCue().done({ title: "Please initialize the owner." })
