@@ -63,24 +63,25 @@ const formErrors = ref({
 
 const submit = async () => {
   loading.value = true
-  if (!validateForm(form, formErrors, signMode)) {
+  const verify = validateForm(form, formErrors, signMode)
+  if (!verify) {
     loading.value = false
     return;
   }
+
   signMode.value ? await signup() : await login()
   loading.value = false
 }
 
 const login = async () => {
-  const token = useToken.get()
   await useApi.post(
     'user/login',
     form.value,
   ).then((data) => {
     const { ok, token } = data
     if (ok) {
-      useRouter().push({ path: "/admin" })
       if (token) useToken.set(token)
+      useRouter().push({ path: "/admin" })
     }
   }).catch(() => {
     useToken.remove()
@@ -97,7 +98,7 @@ onMounted(async () => {
   const noauth = useRoute().query.mode === 'auth'
 
   if (auth) {
-    await submit()
+    await login()
   } else {
     if (noauth) cue.error({ title: 'You have no permission' })
     const init: any = await useApi.get('user/init')

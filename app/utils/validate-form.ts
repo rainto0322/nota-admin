@@ -25,6 +25,7 @@ export const validateForm = (
   errors: Ref<FormErrors>,
   isSignMode: Ref<boolean> | boolean
 ): boolean => {
+
   let isValid = true
   errors.value = { name: '', psw: '', email: '' }
 
