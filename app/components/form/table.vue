@@ -1,159 +1,120 @@
 <template>
-
-  <div class="table">
-
-    <div class="text-right">
-      <button class="sticky right-0" @click="NewItem">
-        Add new
-      </button>
-    </div>
-    <table v-if="TableData && TableData.length" cellspacing="0">
-      <!-- table header -->
-      <thead>
-        <tr>
-          <template v-for="value in ListHeader">
-            <th v-if="value !== '_id'">
-              {{ value }}
-            </th>
-          </template>
-          <th v-show="props.control">
-            control
-          </th>
-        </tr>
-      </thead>
-
-      <!-- table body -->
-      <tbody>
-        <tr v-for="item, item_key in TableData" @click="SelectRow(item_key)"
-          :class="{ 'active': selectRow === item_key }">
-          <template v-for="(value, key) of item">
-            <td v-if="String(key) !== '_id'">
-              <div style="width: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-                <template v-if="String(key) === 'date'">
-                  {{ dayjs(value).format('YYYY-MM-DD HH:mm') }}
-                </template>
-                <template v-else>
+  <div class="table-wrap">
+    <div class="table-contain">
+      <div>
+        <table cellspacing="0">
+          <!-- table header -->
+          <thead>
+            <tr>
+              <template v-for="value in header">
+                <th v-if="value !== '_id'">
                   {{ value }}
-                </template>
-              </div>
-            </td>
-          </template>
-          <th class="control" v-show="props.control">
-            <span class="text-done pr-4" @click="GotoEdit(item._id)">Edit</span>
-            <span class="text-error" @click="DeleteItem(item._id)">Delete</span>
-          </th>
-        </tr>
-      </tbody>
-    </table>
-    <h1 class="text-center show" v-else-if="loading">
-      <icon name="tabler:loader" />
-    </h1>
-    <h1 class="text-center text-gray show" v-else>
-      <icon class="mr-2" size="30px" name="tabler:database-x" /> No data available
-    </h1>
-  </div>
+                </th>
+              </template>
 
+              <th v-show="EditFunc || DeleteFunc">
+                control
+              </th>
+            </tr>
+          </thead>
+
+          <!-- table body -->
+          <tbody>
+            <tr v-for="item, item_key in body">
+              <template v-for="value, key of item">
+                <td v-if="String(key) !== '_id'">
+                  <template v-if="String(key) === 'date'">
+                    {{ dayjs(value).format('YYYY/MM/DD HH:mm') }}
+                  </template>
+                  <template v-else>
+                    {{ value }}
+                  </template>
+                </td>
+              </template>
+
+              <th v-show="EditFunc || DeleteFunc">
+                <span class="text-done pr-4" v-if="EditFunc" @click="EditFunc(item._id)">Edit</span>
+                <span class="text-error" v-if="DeleteFunc" @click="DeleteFunc(item._id)">Delete</span>
+              </th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
 import dayjs from "dayjs";
+const modelValue = defineModel({ type: Array, required: true })
 const props = defineProps({
-  api: {
-    type: String,
-    required: true
-  },
-  current: {
-    type: Number,
-    default: 1
-  },
-  page_size: {
-    default: 20,
-    type: Number
-  },
-  control: {
-    type: Boolean,
-    default: true
-  },
   header: {
     type: Array as () => string[] | null,
   },
+  EditFunc: {
+    type: Function
+  },
+  DeleteFunc: {
+    type: Function
+  },
 })
 
-const loading = ref(false)
-const ListHeader = ref()
-const TableData = ref()
-const selectRow = ref()
+const header = ref()
+const body = ref()
 
-const SelectRow = (index: number) => {
-  selectRow.value = selectRow.value === index ? null : index
-}
-
-const GetList = async () => {
-  loading.value = true
-  const result = await useApi.get(`${props.api}/li/${props.current - 1}/${props.page_size}`).catch((err) => {
-    loading.value = false
-  })
-  const data = result?.data
-  if (data) {
-    if (props.header) {
-      ListHeader.value = props.header
-      TableData.value = data.map((item: Record<string, any>) => {
-        const newObj: Record<string, any> = {}
-        props.header?.forEach((key) => {
-          newObj[key] = item[key];
-        })
-        return newObj
+// 处理数据映射的函数
+const processData = () => {
+  if (props.header) {
+    header.value = props.header
+    body.value = modelValue.value.map((item: any) => {
+      const newHead: Record<string, any> = {}
+      props.header?.forEach((key) => {
+        newHead[key] = item[key]
       })
-    } else {
-      TableData.value = data
-      ListHeader.value = Object.keys(data[0])
-    }
-  }
-  loading.value = false
-}
-GetList()
-
-const GotoEdit = (id: string) => {
-  useRouter().push(`/admin/${props.api}/${id}`)
-}
-
-const NewItem = () => {
-  useRouter().push(`/admin/${props.api}/`)
-}
-
-const DeleteItem = async (id: string) => {
-  if (confirm("Are you sure to delete this item?")) {
-    const resule = await useApi.delete(`${props.api}/${id}`).catch((err) => {
-      TableData.value = []
+      return newHead
     })
-    if (resule?.ok) {
-      await GetList()
-    }
+  } else {
+    header.value = Object.keys((modelValue.value as any[])[0] || {})
+    body.value = modelValue.value
   }
 }
 
+processData()
+
+watch(modelValue, (newValue) => {
+  if (newValue) {
+    processData()
+  }
+}, { deep: true })
 
 </script>
 
 <style scoped>
-.table {
-  width: 100%;
+.table-contain-wrap {
   max-width: 100%;
-  overflow-x: scroll;
-  font-size: 14px;
-  min-height: 500px;
+  overflow: hidden;
 }
 
-.table table {
+.table-contain {
+  overflow-x: scroll;
+}
+
+.table-contain {
+  width: 100%;
+  font-size: 14px;
+}
+
+.table-contain table {
   min-width: 100%;
 }
 
-.table tr {
+
+.table-contain tr {
   position: relative;
 }
 
-.table th,
-.table td {
+.table-contain th,
+.table-contain td {
   min-width: 20px;
   max-width: 200px;
   text-align: left;
@@ -164,11 +125,12 @@ const DeleteItem = async (id: string) => {
   margin: 0;
 }
 
-.table tr:nth-child(2n) {
+.table-contain thead tr,
+.table-contain tr:nth-child(2n) {
   background-color: var(--blur);
 }
 
-.table tr.active .control {
+.table-contain tr.active .control {
   background: var(--blur);
   position: sticky;
   right: -20px;

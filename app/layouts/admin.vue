@@ -1,7 +1,8 @@
 <template>
     <div id="admin">
+        <NuxtLoadingIndicator color="#95b1ac" />
         <div class="menu-open-btn" @click="toggleMenu">
-            <icon name="tabler-list" size="22"/>
+            <icon name="tabler-list" size="22" />
         </div>
         <admin-header class="header" :class="{ 'open': menuMode }" />
         <div class="p-4 w-full show overflow-x-auto">

@@ -1,6 +1,6 @@
 <template>
   <nuxt-layout name="admin">
-    <form-table api="memo"  />
+    <form-table api="memo" />
   </nuxt-layout>
 </template>
 
