@@ -1,15 +1,15 @@
 <template>
     <div class="min-w-60 flex flex-col p-4 italic">
-        <nuxt-link class="rounded-4 p-4 my-1" v-for="item in NotaMenu" :to="`/admin${item.path}`">
-            <icon class="m-r-2 v-middle" size="22" :name=item.icon />
-            <span class="">
+        <nuxt-link class="menu-item" v-for="item in NotaMenu" :to="`/admin${item.path}`">
+            <icon class="menu-icon" size="22" :name=item.icon />
+            <span class="menu-name">
                 {{ item.name }}
             </span>
         </nuxt-link>
 
-        <span class="rounded-4 p-4 my-1 text-done cursor-pointer " @click="logout">
-            <icon class="m-r-2 v-middle" name="tabler:logout-2" size="22" />
-            <span>
+        <span class="menu-item" @click="logout">
+            <icon class="menu-icon" name="tabler:logout-2" size="22" />
+            <span class="menu-name">
                 Logout
             </span>
         </span>
@@ -25,8 +25,35 @@ const logout = () => {
 </script>
 
 <style scoped>
-.router-link-active {
+.menu-item {
+    border-radius: 1rem;
+    margin-block: .25rem;
+    padding: 1rem;
+    color: var(--done);
+}
+
+.menu-item.router-link-active {
     background-color: var(--blur);
     color: var(--error);
+}
+
+.menu-icon {
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.menu-name {
+    vertical-align: middle;
+}
+
+@media screen and (max-width: 768px) {
+    .menu-icon {
+        margin: 0;
+        padding: 0;
+    }
+
+    .menu-name {
+        display: none;
+    }
 }
 </style>

@@ -1,8 +1,11 @@
 <template>
   <nuxt-layout name="admin">
-    <form-table v-model="data" :EditFunc="EditMemo" :DeleteFunc="DeleteMemo" />
     <div class="text-right">
-      <button>Add memo</button>
+      <button class="ml-auto" @click="router.push('/admin/memo')">+ Add memo</button>
+    </div>
+    <form-table v-model="data" :EditFunc="EditMemo" :DeleteFunc="DeleteMemo" />
+    <div class="w-auto">
+      <form-table-pag :current="current" :max="max" prefix="/admin" :showEllipsis="false" />
     </div>
   </nuxt-layout>
 </template>
@@ -11,9 +14,14 @@
 const page = Number(useRoute().params.page) || 1
 const router = useRouter()
 const data = ref()
+const current = ref()
+const max = ref()
 
-const result: any = await useApi.get(`memo/li/${page - 1}/20`)
+const result: any = await useApi.get(`memo/li/${page - 1}/2`)
+current.value = page
 data.value = result.data
+max.value = result.max
+
 
 const EditMemo = async (id: string) => {
   router.push(`/admin/memo/${id}`)

@@ -90,8 +90,9 @@ watch(modelValue, (newValue) => {
 </script>
 
 <style scoped>
-.table-contain-wrap {
+.table-wrap {
   max-width: 100%;
+  margin-block: 1em;
   overflow: hidden;
 }
 

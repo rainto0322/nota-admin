@@ -37,18 +37,8 @@ const toggleMenu = () => {
 
 @media screen and (max-width: 768px) {
     .header {
-        min-height: 100vh;
-        overflow-x: hidden;
-        overflow-y: auto;
-        position: fixed;
-        visibility: hidden;
-        background-color: var(--blur);
-        backdrop-filter: blur(5px);
-        z-index: 10;
-        opacity: 0;
-        transition: all .2s;
-        flex-direction: column-reverse;
-        padding-bottom: 100px;
+        flex-direction: row;
+        overflow: scroll;
     }
 
     .header.open {
