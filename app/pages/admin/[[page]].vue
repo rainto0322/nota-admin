@@ -17,7 +17,7 @@ const data = ref()
 const current = ref()
 const max = ref()
 
-const result: any = await useApi.get(`memo/li/${page - 1}/2`)
+const result: any = await useApi.get(`memo/li/${page - 1}/20`)
 current.value = page
 data.value = result.data
 max.value = result.max

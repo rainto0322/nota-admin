@@ -20,11 +20,12 @@
 
           <!-- table body -->
           <tbody>
-            <tr v-for="item, item_key in body">
+            <tr v-for="item, item_key in body" @click="SelectRow(item_key)"
+              :class="{ 'active': selectedRow === item_key }">
               <template v-for="value, key of item">
                 <td v-if="String(key) !== '_id'">
                   <template v-if="String(key) === 'date'">
-                    {{ dayjs(value).format('YYYY/MM/DD HH:mm') }}
+                    {{ dayjs(value).format('YYYY-MM-DD HH:mm') }}
                   </template>
                   <template v-else>
                     {{ value }}
@@ -32,10 +33,10 @@
                 </td>
               </template>
 
-              <th v-show="EditFunc || DeleteFunc">
+              <td class="control" v-show="EditFunc || DeleteFunc">
                 <span class="text-done pr-4" v-if="EditFunc" @click="EditFunc(item._id)">Edit</span>
                 <span class="text-error" v-if="DeleteFunc" @click="DeleteFunc(item._id)">Delete</span>
-              </th>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -61,6 +62,11 @@ const props = defineProps({
 
 const header = ref()
 const body = ref()
+const selectedRow = ref()
+
+const SelectRow = (index: number) => {
+  selectedRow.value = selectedRow.value === index ? null : index
+}
 
 // 处理数据映射的函数
 const processData = () => {
@@ -134,6 +140,6 @@ watch(modelValue, (newValue) => {
 .table-contain tr.active .control {
   background: var(--blur);
   position: sticky;
-  right: -20px;
+  right: 0;
 }
 </style>

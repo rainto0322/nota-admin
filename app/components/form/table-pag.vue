@@ -19,7 +19,7 @@
       <span v-if="showBackEllipsis && showEllipsis" class="ellipsis">...</span>
 
       <!-- last page -->
-      <span v-if="current === max" @click="goToPage(max)" :class="{ active: current === max }">
+      <span v-if="current === max && current > 1" @click="goToPage(max)" :class="{ active: current === max }">
         {{ max }}
       </span>
 
@@ -56,6 +56,8 @@ const displayedPages = computed(() => {
   const range = [];
 
   for (let i = Math.max(2, current - delta); i <= Math.min(max - 1, current + delta); i++) {
+    console.log(i);
+
     range.push(i);
   }
 

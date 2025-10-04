@@ -98,7 +98,9 @@ onMounted(async () => {
   const noauth = useRoute().query.mode === 'auth'
 
   if (auth) {
+    loading.value = true
     await login()
+    loading.value = false
   } else {
     if (noauth) cue.error({ title: 'You have no permission' })
     const init: any = await useApi.get('user/init')
