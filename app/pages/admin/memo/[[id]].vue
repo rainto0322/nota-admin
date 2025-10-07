@@ -40,16 +40,16 @@ const submit = async () => {
 }
 
 const CreateMemo = async () => {
-  await useApi.post('memo', form.value).then(() => {
-    useRouter().push('/admin/memo/p/')
-  }).catch(() => { })
+  await useApi.post('memo', form.value).then(() => { }).catch(() => { })
 }
 
 const UpdateMemo = async () => {
-  await useApi.put(`memo/${id}`, form.value).then(() => {
-    useRouter().push('/admin/memo/p/')
-  }).catch(() => { })
+  await useApi.put(`memo/${id}`, form.value).then(() => { }).catch(() => { })
 }
+
+watch(() => form.value.img, async () => {
+  await UpdateMemo();
+}, { deep: true });
 
 </script>
 

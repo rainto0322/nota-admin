@@ -27,7 +27,8 @@
       <span v-if="current !== max" @click="goToPage(current + 1)">next
       </span>
 
-      <input class="jump" :max="max" min="1" type="number" v-model="inputValue" @keypress="handleKeyPress">
+      <input v-if="current !== 1" class="jump" :max="max" min="1" type="number" v-model="inputValue"
+        @keypress="handleKeyPress">
     </div>
   </div>
 </template>

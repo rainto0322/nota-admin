@@ -1,9 +1,9 @@
 <template>
   <div class="flex flex-wrap gap-2 ">
     <!-- Existing images -->
-    <div class="img" v-for="item in modelValue">
-      <img :src="`https://raw.gitcode.com/rainto/Album/raw/main/daily/${item}.png`">
-      <span class="img-name">{{ item }}</span>
+    <div class="img" v-for="name, key in modelValue" @click="RemoveImage(name, key)">
+      <img :src="`https://raw.gitcode.com/rainto/Album/raw/main/daily/${name}.png`">
+      <span class="img-name">{{ name }}</span>
     </div>
 
     <!-- select image -->
@@ -23,9 +23,17 @@
 
 <script lang="ts" setup>
 const modelValue = defineModel<string[]>()
+
 const fileInput = ref<HTMLInputElement | null>(null);
 const selectFiles = ref<ImageSelect[]>([])
-const { UploadImage } = useImage()
+const { DeleteImage, UploadImage } = useImage()
+
+const RemoveImage = async (name: string, key: number) => {
+  await DeleteImage(name)
+  if (modelValue.value) {
+    modelValue.value = modelValue.value.filter((_, index) => index !== key)
+  }
+}
 
 const UploadCancel = (name: string) => {
   selectFiles.value = selectFiles.value.filter(img => img.name !== name);
@@ -43,7 +51,6 @@ const handleUpload = async (event: Event) => {
       item.state = 50
       if (data.commit) {
         item.state = 100
-
         setTimeout(() => {
           UploadCancel(item.name)
           modelValue.value?.push(item.name)
