@@ -13,6 +13,7 @@
 
 <script lang="ts" setup>
 const route = useRoute();
+const router = useRouter();
 const loading = ref(false)
 const id = route.params.id || null;
 const form = ref({
@@ -40,11 +41,11 @@ const submit = async () => {
 }
 
 const CreateMemo = async () => {
-  await useApi.post('memo', form.value).then(() => { }).catch(() => { })
+  await useApi.post('memo', form.value).then(() => { router.push('/admin') }).catch(() => { })
 }
 
 const UpdateMemo = async () => {
-  await useApi.put(`memo/${id}`, form.value).then(() => { }).catch(() => { })
+  await useApi.put(`memo/${id}`, form.value).then(() => { router.push('/admin') }).catch(() => { })
 }
 
 watch(() => form.value.img, async () => {

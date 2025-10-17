@@ -12,9 +12,9 @@ export const useImage = () => {
     return `https://api.gitcode.com/api/v5/repos/${git_name}/${path}?access_token=${git_token}`
   }
 
-  const UploadImage = async (file: ImageSelect) => {
+  const UploadImage = async (file: ImageSelect, tag: string = "daily") => {
     try {
-      const data: any = await $fetch(url(`contents/daily/${file.name}.png`), {
+      const data: any = await $fetch(url(`contents/${tag}/${file.name}.png`), {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
@@ -39,10 +39,9 @@ export const useImage = () => {
     }
   }
 
-  // GET https://api.gitcode.com/api/v5/repos/rainto/Album/contents/daily/250928-jvjw.png?access_token=P3zG_xGpgy91ii6CrgAS5szy
-  const DeleteImage = async (name: string) => {
+  const DeleteImage = async (name: string, tag: string = "daily") => {
     try {
-      const { path, sha } = await $fetch<GetFileSha>(url(`contents/daily/${name}.png`))
+      const { path, sha } = await $fetch<GetFileSha>(url(`contents/${tag}/${name}.png`))
       const data = await $fetch(url(`contents/${path}`), {
         method: 'DELETE',
         headers: {

@@ -104,7 +104,8 @@ onMounted(async () => {
   } else {
     if (noauth) cue.error({ title: 'You have no permission' })
     const init: any = await useApi.get('user/init')
-
+  console.log(init);
+  
     if (init.ok) {
       signMode.value = true
       useCue().done({ title: "Please initialize the owner." })
