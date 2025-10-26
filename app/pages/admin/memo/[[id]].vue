@@ -49,7 +49,7 @@ const UpdateMemo = async () => {
 }
 
 watch(() => form.value.img, async () => {
-  await UpdateMemo();
+  if (id) await UpdateMemo();
 }, { deep: true });
 
 </script>
