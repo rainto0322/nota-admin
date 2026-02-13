@@ -3,13 +3,13 @@ import type { Ref } from 'vue'
 
 interface FormData {
   name: string
-  psw: string
+  password: string
   email: string
 }
 
 interface FormErrors {
   name: string
-  psw: string
+  password: string
   email: string
 }
 
@@ -27,7 +27,7 @@ export const validateForm = (
 ): boolean => {
 
   let isValid = true
-  errors.value = { name: '', psw: '', email: '' }
+  errors.value = { name: '', password: '', email: '' }
 
   // 验证name（2-8字符）
   if (!form.value.name || form.value.name.length < 2 || form.value.name.length > 8) {
@@ -37,8 +37,8 @@ export const validateForm = (
 
   // 验证password（8-20字符且包含字母和数字）
   const pswRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/
-  if (!form.value.psw || !pswRegex.test(form.value.psw)) {
-    errors.value.psw = 'Password must be 8-20 characters with letters and numbers'
+  if (!form.value.password || !pswRegex.test(form.value.password)) {
+    errors.value.password = 'Password must be 8-20 characters with letters and numbers'
     isValid = false
   }
 

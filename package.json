@@ -15,11 +15,12 @@
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
+    "@iconify-json/tabler": "^1.2.23",
+    "@nuxt/icon": "^2.0.0",
+    "@types/node": "^24.5.2",
     "@unocss/nuxt": "^66.4.2",
     "@unocss/preset-wind3": "^66.4.2",
-    "@nuxt/icon": "^2.0.0",
-    "@iconify-json/tabler": "^1.2.23",
-    "@types/node": "^24.5.2",
+    "baseline-browser-mapping": "latest",
     "dayjs": "^1.11.18",
     "unocss": "^66.5.2"
   },

@@ -64,7 +64,7 @@ const RemoveCue = (id: string) => {
   margin-right: 5px;
 }
 
-.cue-msg{
+.cue-msg {
   margin: 10px 5px 5px 0;
 }
 

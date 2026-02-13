@@ -16,7 +16,7 @@
       <input :class="{ 'border-error': formErrors.name }" v-model="form.name" placeholder="name" />
 
       <!-- password -->
-      <input :class="{ 'border-error': formErrors.psw }" v-model="form.psw" placeholder="password" />
+      <input :class="{ 'border-error': formErrors.password }" v-model="form.password" placeholder="password" />
 
       <!-- email -->
       <div class="show" v-if="signMode">
@@ -51,13 +51,13 @@ const toggleMode = () => signMode.value = !signMode.value
 
 const form = ref({
   name: '',
-  psw: '',
+  password: '',
   email: ''
 })
 
 const formErrors = ref({
   name: '',
-  psw: '',
+  password: '',
   email: ''
 })
 
@@ -75,8 +75,8 @@ const submit = async () => {
 
 const login = async () => {
   await useApi.post(
-    'user/login',
-    form.value,
+    'login',
+    useToken.get() ? {} : form.value,
   ).then((data) => {
     const { ok, token } = data
     if (ok) {
@@ -89,7 +89,7 @@ const login = async () => {
 }
 
 const signup = async () => {
-  await useApi.post('user/reg', form.value)
+  await useApi.post('signup', form.value)
     .then((data) => { }).catch(() => { })
 }
 
@@ -103,13 +103,6 @@ onMounted(async () => {
     loading.value = false
   } else {
     if (noauth) cue.error({ title: 'You have no permission' })
-    const init: any = await useApi.get('user/init')
-  console.log(init);
-  
-    if (init.ok) {
-      signMode.value = true
-      useCue().done({ title: "Please initialize the owner." })
-    }
   }
 })
 </script>

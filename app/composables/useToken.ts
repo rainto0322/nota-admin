@@ -4,10 +4,7 @@ const Token = 'nota_token'
 export const useToken = {
   get: () => useCookie(Token).value,
   set: (params: string) => {
-    const auth = useCookie(Token, {
-      sameSite: 'lax',
-      secure: false
-    })
+    const auth = useCookie(Token)
     auth.value = params
   },
   remove: () => {
