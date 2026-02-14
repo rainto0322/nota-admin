@@ -1,7 +1,8 @@
 <template>
   <nuxt-layout name="admin">
     <form-upload v-model="form.img" />
-    <form-datetime v-model="form.date" />
+    {{ form.date }}
+    <!-- <form-datetime v-model="form.date" /> -->
     <form-markdown v-model="form.cont" />
     <div class="text-right">
       <button @click="submit">
@@ -19,13 +20,11 @@ const id = route.params.id || null;
 const form = ref({
   img: [],
   cont: '',
-  date: 0,
+  date: '',
 })
 
 const GetMemo = async () => {
   await useApi.get(`memo/${id}`).then((data) => {
-    console.log(data.data);
-
     if (data.ok) {
       form.value = data.data
     }
@@ -43,8 +42,6 @@ const submit = async () => {
 }
 
 const CreateMemo = async () => {
-  console.log(form.value);
-  
   await useApi.post('memo', form.value).then(() => { router.push('/admin') }).catch(() => { })
 }
 

@@ -12,9 +12,9 @@ useHead({
     link: [
         {
             rel: "icon",
-            type: "image/svg+xml",
+            type: "image/png",
             sizes: "32x32",
-            href: "/favicon.svg",
+            href: "/favicon.png",
         },
     ],
     title: "Nota",
